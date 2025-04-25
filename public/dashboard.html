@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="./dashboard.css">
+</head>
+<body>
+  <h2>Your Orders</h2>
+  <ul id="orderList"></ul>
+
+  <h3>Place New Order</h3>
+  <input id="packageId" placeholder="Package ID" type="number"><br>
+  <input id="destination" placeholder="Destination"><br>
+  <button onclick="placeOrder()">Place Order</button>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    function loadOrders() {
+      fetch(`/api/orders/${user.id}`)
+        .then(res => res.json())
+        .then(orders => {
+          const list = document.getElementById('orderList');
+          list.innerHTML = '';
+          orders.forEach(o => {
+            const li = document.createElement('li');
+            li.textContent = `${o.package_id} -> ${o.destination} [${o.status}]`;
+            list.appendChild(li);
+          });
+        });
+    }
+
+    function placeOrder() {
+      const packageIdInput = document.getElementById('packageId').value;
+      const destinationInput = document.getElementById('destination').value;
+
+      const packageId = parseInt(packageIdInput);
+      if (isNaN(packageId)) {
+        alert("Please enter a valid Package ID (number).");
+        return;
+      }
+
+      fetch('/api/order', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          user_id: user.id,
+          package_id: packageId,
+          destination: destinationInput
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message);
+        loadOrders();
+      });
+    }
+
+    window.onload = loadOrders;
+  </script>
+</body>
+</html>

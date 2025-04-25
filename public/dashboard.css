@@ -1,0 +1,68 @@
+/* Base setup */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+  }
+  
+  body {
+    background: linear-gradient(to right, #43e97b, #38f9d7);
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Header */
+  h2, h3 {
+    color: #333;
+    margin-bottom: 16px;
+  }
+  
+  /* Orders list */
+  #orderList {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 40px;
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  #orderList li {
+    background-color: #fff;
+    padding: 14px 20px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: #444;
+  }
+  
+  /* Inputs */
+  input {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px;
+    margin-bottom: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+  }
+  
+  /* Button */
+  button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  

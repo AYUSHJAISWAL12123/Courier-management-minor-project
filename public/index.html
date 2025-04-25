@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Courier Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="login-box">
+    <h2>Login</h2>
+    <input id="email" placeholder="Email"><br>
+    <input id="password" placeholder="Password" type="password"><br>
+    
+    <label for="userType">Login as:</label>
+    <select id="userType">
+      <option value="user">User</option>
+      <option value="admin">Admin</option>
+    </select><br><br>
+
+    <button onclick="login()">Login</button>
+  </div>
+
+  <script>
+    function login() {
+      fetch('/api/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          email: document.getElementById('email').value,
+          password: document.getElementById('password').value
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          localStorage.setItem('user', JSON.stringify(data.user));
+          // Redirect based on role from database, not dropdown
+          if (data.user.is_admin) {
+            window.location.href = 'admin-dashboard.html';
+          } else {
+            window.location.href = 'dashboard.html';
+          }
+        } else {
+          alert(data.message);
+        }
+      });
+    }
+  </script>
+  
+</body>
+</html>
